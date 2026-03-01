@@ -1,0 +1,85 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps-scm-matrix
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions:
+    - missingkey=error
+  syncPolicy:
+    preserveResourcesOnDeletion: false
+  generators:
+    - matrix:
+        generators:
+          - scmProvider:
+              cloneProtocol: https
+              github:
+                organization: BacktotheBone
+                allBranches: false
+                # appSecretName: repo-creds-github 
+                # Optional: Only if repository is private, 
+                # Add a Kubernetes secret with GitHub credentials (https://argo-cd.readthedocs.io/en/stable/user-guide/private-repositories/#github)
+              filters:
+                - repositoryMatch: '.*'
+                  labelMatch: 'argo-managed'
+                  pathsExist:
+                    - deploy/.argo-managed
+          - list:
+              elements:
+                - env: dev
+                  namespace: '{{ .path.basename }}'
+                  component: backend
+                  chart: golden-api
+                  chartVersion: '>=0.1.0 <0.2.0'
+                  valuesFile: deploy/backend/values-dev.yaml
+
+                - env: dev
+                  namespace: '{{ .path.basename }}'
+                  component: frontend
+                  chart: golden-web
+                  chartVersion: '>=0.1.0 <0.2.0'
+                  valuesFile: deploy/frontend/values-dev.yaml
+  template:
+    metadata:
+      name: >-
+        {{- $r := regexReplaceAll "-+" (regexReplaceAll "[^a-z0-9-]" (.repository | lower) "-") "-" | trimAll "-" -}}
+        {{- if eq $r "" -}}{{- $r = "repo" -}}{{- end -}}
+        {{- printf "%s-%s-%s" $r .component .env | trunc 253 | trimAll "-" -}}
+      labels:
+        app.kubernetes.io/managed-by: argocd
+        platform.repo: '{{ .repository }}'
+        platform.repo-slug: >-
+          {{- $r := regexReplaceAll "-+" (regexReplaceAll "[^a-z0-9-]" (.repository | lower) "-") "-" | trimAll "-" -}}
+          {{- if eq $r "" -}}{{- $r = "repo" -}}{{- end -}}
+          {{- printf "%s-%s" $r .component | trunc 63 | trimAll "-" -}}
+        platform.env: '{{ .env }}'
+        platform.component: '{{ .component }}'
+    spec:
+      project: 'apps'
+      source:
+        - repoURL: ghcr.io/BacktotheBone/argocd-lab-charts
+          chart: '{{ .chart }}'
+          targetRevision: '{{ .chartVersion }}'
+          helm:
+            releaseName: >-
+              {{- $r := regexReplaceAll "-+" (regexReplaceAll "[^a-z0-9-]" (.repository | lower) "-") "-" | trimAll "-" -}}
+              {{- if eq $r "" -}}{{- $r = "repo" -}}{{- end -}}
+              {{- printf "%s-%s-%s" ($r | trunc 45) .component .env | trunc 63 | trimAll "-" -}}
+            valueFiles:
+              - '$values/{{ .valuesFile }}'
+        - repoURL: '{{ .url }}'
+          targetRevision: '{{ .branch }}'
+          ref: values
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{ .path.basename }}'
+      syncPolicy:
+        managedNamespaceMetadata:
+          labels:
+            argocd.argoproj.io/managed-by: argocd
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
