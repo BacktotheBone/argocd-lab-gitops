@@ -17,9 +17,11 @@ spec:
               github:
                 organization: BacktotheBone
                 allBranches: false
-                # appSecretName: repo-creds-github 
-                # Optional: Only if repository is private, 
-                # Add a Kubernetes secret with GitHub credentials (https://argo-cd.readthedocs.io/en/stable/user-guide/private-repositories/#github)
+                tokenRef:
+                  secretName: github-token
+                  key: token
+                # Create the secret with:
+                # kubectl create secret generic github-token -n argocd --from-literal=token=<your-github-pat>
               filters:
                 - repositoryMatch: '.*'
                   labelMatch: 'argo-managed'
