@@ -56,7 +56,7 @@ spec:
         platform.env: '{{ .env }}'
         platform.component: '{{ .component }}'
     spec:
-      project: 'apps'
+      project: 'default'
       sources:
         - repoURL: ghcr.io/BacktotheBone/argocd-lab-charts
           chart: '{{ .chart }}'
