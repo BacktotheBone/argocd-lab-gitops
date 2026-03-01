@@ -17,11 +17,7 @@ spec:
               github:
                 organization: BacktotheBone
                 allBranches: false
-                tokenRef:
-                  secretName: github-token
-                  key: token
-                # Create the secret with:
-                # kubectl create secret generic github-token -n argocd --from-literal=token=<your-github-pat>
+                appSecretName: repo-creds-github
               filters:
                 - repositoryMatch: '.*'
                   labelMatch: 'argo-managed'
