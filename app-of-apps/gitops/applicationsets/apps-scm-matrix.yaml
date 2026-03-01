@@ -57,7 +57,7 @@ spec:
         platform.component: '{{ .component }}'
     spec:
       project: 'apps'
-      source:
+      sources:
         - repoURL: ghcr.io/BacktotheBone/argocd-lab-charts
           chart: '{{ .chart }}'
           targetRevision: '{{ .chartVersion }}'
