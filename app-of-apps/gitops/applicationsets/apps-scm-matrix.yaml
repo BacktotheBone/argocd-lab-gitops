@@ -24,22 +24,22 @@ spec:
                 - repositoryMatch: '.*'
                   labelMatch: 'argo-managed'
                   pathsExist:
-                    - '**/deploy/.argo-managed'
+                    - app-scm-examples/spike/deploy/.argo-managed 
           - list:
               elements:
                 - env: dev
-                  namespace: '{{ .path.basename }}'
+                  namespace: '{{ .repository }}'
                   component: backend
                   chart: golden-api
                   chartVersion: '>=0.0.0 <0.2.0'
-                  valuesFile: deploy/backend/values-dev.yaml
+                  valuesFile: app-scm-examples/spike/deploy/backend/values-dev.yaml
 
                 - env: dev
-                  namespace: '{{ .path.basename }}'
+                  namespace: '{{ .repository }}'
                   component: frontend
                   chart: golden-web
                   chartVersion: '>=0.0.0 <0.2.0'
-                  valuesFile: deploy/frontend/values-dev.yaml
+                  valuesFile: app-scm-examples/spike/deploy/frontend/values-dev.yaml
   template:
     metadata:
       name: >-
@@ -73,7 +73,7 @@ spec:
           ref: values
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{ .path.basename }}'
+        namespace: '{{ .namespace }}'
       syncPolicy:
         managedNamespaceMetadata:
           labels:
