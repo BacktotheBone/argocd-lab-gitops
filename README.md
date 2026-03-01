@@ -13,10 +13,6 @@ cd argocd-lab-gitops
 kubectl apply --server-side -k argocd/
 ```
 
-This command:
-- Creates the `argocd` namespace
-- Installs ArgoCD using the official manifests (v3.3.1)
-
 Wait for ArgoCD to be ready before proceeding:
 
 ```bash
