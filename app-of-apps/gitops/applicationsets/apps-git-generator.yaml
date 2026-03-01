@@ -14,10 +14,10 @@ spec:
         repoURL: https://github.com/BacktotheBone/argocd-lab-apps.git
         revision: HEAD
         directories:
-          - path: demo-apps/*
+          - path: app-git-examples/*
   template:
     metadata:
-      name: 'demo-{{ .path.basename }}'
+      name: 'app-git-{{ .path.basename }}-example'
     spec:
       project: 'default'
       source:
