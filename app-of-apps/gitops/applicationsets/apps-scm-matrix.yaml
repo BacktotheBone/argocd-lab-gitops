@@ -31,14 +31,14 @@ spec:
                   namespace: '{{ .path.basename }}'
                   component: backend
                   chart: golden-api
-                  chartVersion: '>=0.1.0 <0.2.0'
+                  chartVersion: '>=0.0.0 <0.2.0'
                   valuesFile: deploy/backend/values-dev.yaml
 
                 - env: dev
                   namespace: '{{ .path.basename }}'
                   component: frontend
                   chart: golden-web
-                  chartVersion: '>=0.1.0 <0.2.0'
+                  chartVersion: '>=0.0.0 <0.2.0'
                   valuesFile: deploy/frontend/values-dev.yaml
   template:
     metadata:
