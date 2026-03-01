@@ -43,3 +43,6 @@ Open: `https://localhost:8080`
   ```bash
   kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
   ```
+
+
+  <img width="2539" height="1279" alt="image" src="https://github.com/user-attachments/assets/61dbae3c-051f-422e-9f34-b1240859cddf" />
