@@ -4,7 +4,7 @@
 
 ```bash
 git clone https://github.com/BacktotheBone/argocd-lab.git
-cd argocd-lab
+cd argocd-lab-gitops
 ```
 
 #### 2. Deploy ArgoCD
