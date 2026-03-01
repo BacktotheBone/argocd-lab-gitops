@@ -56,7 +56,7 @@ spec:
     spec:
       project: 'default'
       sources:
-        - repoURL: oci://ghcr.io/backtothebone/argocd-lab-charts
+        - repoURL: ghcr.io/backtothebone/argocd-lab-charts
           chart: '{{ .chart }}'
           targetRevision: '{{ .chartVersion }}'
           helm:
