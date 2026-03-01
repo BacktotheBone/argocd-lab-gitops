@@ -14,7 +14,7 @@ spec:
         repoURL: https://github.com/BacktotheBone/argocd-lab-apps.git
         revision: HEAD
         directories:
-          - path: apps/*
+          - path: demo-apps/*
   template:
     metadata:
       name: '{{ .path.basename }}'
