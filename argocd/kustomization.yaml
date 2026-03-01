@@ -6,6 +6,6 @@ labels:
       app.kubernetes.io/managed-by: kustomize
 
 resources:
-  - 00-namespace
+  - 00-namespaces
   - 10-argocd-install
   - 20-secrets
