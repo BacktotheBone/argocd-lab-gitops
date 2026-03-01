@@ -33,14 +33,14 @@ spec:
                   namespace: '{{ .repository }}'
                   component: backend
                   chart: golden-api
-                  chartVersion: '>=0.0.0 <0.2.0'
+                  chartVersion: '0.0.1'
                   valuesFile: app-scm-examples/spike/deploy/backend/values-dev.yaml
 
                 - env: dev
                   namespace: '{{ .repository }}'
                   component: frontend
                   chart: golden-web
-                  chartVersion: '>=0.0.0 <0.2.0'
+                  chartVersion: '0.0.1'
                   valuesFile: app-scm-examples/spike/deploy/frontend/values-dev.yaml
   template:
     metadata:
