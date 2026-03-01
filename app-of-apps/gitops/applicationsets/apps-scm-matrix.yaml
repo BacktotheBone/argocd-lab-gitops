@@ -24,7 +24,7 @@ spec:
                 - repositoryMatch: '.*'
                   labelMatch: 'argo-managed'
                   pathsExist:
-                    - deploy/.argo-managed
+                    - '**/deploy/.argo-managed'
           - list:
               elements:
                 - env: dev
