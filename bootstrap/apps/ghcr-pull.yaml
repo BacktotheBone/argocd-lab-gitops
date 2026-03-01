@@ -11,17 +11,7 @@ stringData:
     {
       "auths": {
         "ghcr.io": {
-          "auth": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+          "auth": "xxx"
         }
       }
     }
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: default
-  namespace: apps
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
-imagePullSecrets:
-  - name: ghcr-pull
