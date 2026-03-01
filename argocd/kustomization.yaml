@@ -9,6 +9,9 @@ labels:
 resources:
   - namespace/argocd.yaml
   - https://raw.githubusercontent.com/argoproj/argo-cd/v3.3.1/manifests/install.yaml
+  - secrets/repo-creds-github.yaml
+  - secrets/repo-ghcr-platform-charts.yaml
+  - secrets/ghcr-pull.yaml
 
 patches:
   - path: configmap/argocd-cm.yaml
